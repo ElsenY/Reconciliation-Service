@@ -144,6 +144,11 @@ curl http://localhost:8001/health
 # {"status":"ok"}
 ```
 
+## Running Test (run in root directory)
+```bash
+  go test ./...
+```
+
 ## Architecture
 
 The project uses a **3-layered architecture** with Go Fiber:
@@ -162,6 +167,7 @@ internal/repository/           # CSV parsing
 internal/model/                # Transaction, BankStatement
 internal/dto/                  # Request/Response DTOs
 internal/helper/               # Generic helper functions
+internal/mocks/                # Go Mock file for unit tests
 testdata/                      # Sample CSV files
 ```
 
