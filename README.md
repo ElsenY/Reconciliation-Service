@@ -34,8 +34,8 @@ A transaction reconciliation API service that identifies unmatched and discrepan
 | Variable             | Default | Description                                                |
 |----------------------|---------|------------------------------------------------------------|
 | `APP_PORT`           | `8001`  | Port the HTTP server listens on                            |
-| `DEFAULT_SYSTEM_CSV` | (empty) | Default system transactions CSV path (used if no upload)  |
-| `DEFAULT_BANK_CSV`   | (empty) | Comma-separated default bank statement CSV paths            |
+| `DEFAULT_SYSTEM_CSV` | testdata/system_transactions.csv | Default system transactions CSV path (used if no upload)  |
+| `DEFAULT_BANK_CSV`   | testdata/bank_bca.csv,testdata/bank_bni.csv,testdata/banka.csv,testdata/bankb.csv,testdata/bankc.csv | Comma-separated default bank statement CSV paths            |
 
 Example `.env`:
 
@@ -45,7 +45,7 @@ DEFAULT_SYSTEM_CSV=testdata/system_transactions.csv
 DEFAULT_BANK_CSV=testdata/bank_bca.csv,testdata/bank_bni.csv,testdata/banka.csv,testdata/bankb.csv,testdata/bankc.csv
 ```
 
-> There are also provided shorter version of the csv files named ```system_transactions_short.csv``` and ```bank_short.csv``` can replace the .env file with these files to see the discrepancies more clearly
+> There are also provided shorter version of the csv files named ```system_transactions_short.csv``` and ```bank_short.csv``` you can replace the .env file with these files to see the discrepancies more clearly
 
 ## API
 
@@ -64,7 +64,7 @@ Reconcile system transactions against bank statements.
 
 \* If files are not sent, the server uses `DEFAULT_SYSTEM_CSV` and `DEFAULT_BANK_CSV`. If those are not set, the request returns `400`.
 
-### cURL examples
+### cURL examples (run in the root repository folder)
 
 **Using default files** (only date range; server reads from `DEFAULT_SYSTEM_CSV` and `DEFAULT_BANK_CSV`):
 
@@ -161,12 +161,13 @@ internal/service/              # Matching algorithm
 internal/repository/           # CSV parsing
 internal/model/                # Transaction, BankStatement
 internal/dto/                  # Request/Response DTOs
+internal/helper/               # Generic helper functions
 testdata/                      # Sample CSV files
 ```
 
 ## CSV Formats
 
-**System transactions** (`trxID,amount,type,transactionTime`). Amounts are in IDR (integer, no decimals):
+**System transactions** (`trxID,amount,type,transactionTime`). (amount in float matching precise up to 3 numbers behind decimal):
 
 ```csv
 trxID,amount,type,transactionTime
@@ -174,7 +175,7 @@ TRX001,504230,CREDIT,2026-03-04T11:08:30
 TRX002,99290,DEBIT,2026-03-09T08:08:43
 ```
 
-**Bank statements** (`unique_identifier,amount,date`). Amounts in IDR; negative = debit:
+**Bank statements** (`unique_identifier,amount,date`). (amount in float matching precise up to 3 numbers behind decimal),negative amount = debit
 
 ```csv
 unique_identifier,amount,date
