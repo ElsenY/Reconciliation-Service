@@ -189,4 +189,4 @@ BCA0002,-2530,2026-03-07
 - **3-layered architecture**: using handler/service/repository architecture to enforce separate responsibility for each layer
 - **Interface-driven layers**: Both `TransactionRepository` and `ReconciliationService` are defined as interfaces, enabling easy mocking in tests and swapping implementations.
 - **Model vs DTO separation**: Domain models (`Transaction`, `BankStatement`) are kept separate from request/response DTOs with JSON tags for clean API responses.
-- **Efficient records matching**: Instead of matching record one by one O(N*M), we use hash map to store records and match it with O(1) time, resulting in overall time complexity to O(N+M) where N is the number of system transactions, and M is the number of combined bank statements
+- **Efficient records matching**: Instead of looping and matching record one by one O(N*M), we use hash map to store records and match it with O(1) time, resulting in overall time complexity to O(N+M) where N is the number of system transactions, and M is the number of combined bank statements
