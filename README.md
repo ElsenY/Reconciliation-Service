@@ -8,13 +8,13 @@ A transaction reconciliation API service that identifies unmatched and discrepan
 
 ## How to Run
 
-1. **Create the .env file** in the main directory (Can just copy .env.example file and rename it to .env to run default settings with sample csv data located in testdata/):
+1. **Create the .env file** in the root directory (Can just copy .env.example file and rename it to .env to run default settings with sample csv data located in testdata/):
 
    ```bash
    cp .env.example .env
    ```
 
-2. **Bootstrap the go app**
+2. **Sync & clean dependencies**
     ```bash
     go mod tidy
     ```
